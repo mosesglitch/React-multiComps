@@ -5,7 +5,8 @@ import Panel from "../components/Panel";
 const INCREMENT_COUNT = "increment";
 const SET_VALUE_TO_ADD = "change_value_to_add";
 const DECREMENT_COUNT = "decerement";
-const reducer = (state, action) => {
+const ADD_VALUE_TO_COUNT = "add_value_to_count";
+const recer = (state, action) => {
   switch (action.type) {
     case INCREMENT_COUNT:
       return { ...state, count: state.count + 1 };
@@ -17,7 +18,8 @@ const reducer = (state, action) => {
       };
     case DECREMENT_COUNT:
       return { ...state, count: state.count - 1 };
-
+    case ADD_VALUE_TO_COUNT:
+      return { ...state, count: state.count + state.valueToAdd, valueToAdd: 0 };
     default:
       throw new Error("unexpected action type:" + action.type);
     // return state;
@@ -37,7 +39,7 @@ const reducer = (state, action) => {
 function CounterPage({ initialCount }) {
   // const [count, setCount] = useState(initialCount);
   // const [valueToAdd, setValueToAdd] = useState(0);
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(recer, {
     count: initialCount,
     valueToAdd: 0,
   });
@@ -64,6 +66,9 @@ function CounterPage({ initialCount }) {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch({
+      type: ADD_VALUE_TO_COUNT,
+    });
     // setCount(count + valueToAdd);
     // setValueToAdd(0);
   };
